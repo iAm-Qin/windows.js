@@ -1,0 +1,23 @@
+.idea
+.svn
+.git
+
+bin
+obj
+Debug
+Release
+.vs
+.suo
+*.user
+*.filters
+
+/build
+
+/codeGen/*
+!/codeGen/c2js.mjs
+!/codeGen/cs/
+/debug
+/docs
+/repos
+/npm publish.txt
+/todo.txt

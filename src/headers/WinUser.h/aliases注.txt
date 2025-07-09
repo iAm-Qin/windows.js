@@ -1,0 +1,4 @@
+
+生成的 aliases.js 基本都是 结构体指针，定义不一样，有些是 #define，有些是 typedef，不好分辨。
+
+结构体指针手动复制到了 structs.js，非结构体指针留在了 aliases.js

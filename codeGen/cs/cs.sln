@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32002.261
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "c2js", "c2js\c2js.csproj", "{04369EA1-9E52-4C22-8A27-6B78D30D0562}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "regexp", "regexp\regexp.csproj", "{D6F4F167-E0A3-4E42-86AB-F9FE28D9A53C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{04369EA1-9E52-4C22-8A27-6B78D30D0562}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04369EA1-9E52-4C22-8A27-6B78D30D0562}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04369EA1-9E52-4C22-8A27-6B78D30D0562}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04369EA1-9E52-4C22-8A27-6B78D30D0562}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6F4F167-E0A3-4E42-86AB-F9FE28D9A53C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6F4F167-E0A3-4E42-86AB-F9FE28D9A53C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6F4F167-E0A3-4E42-86AB-F9FE28D9A53C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6F4F167-E0A3-4E42-86AB-F9FE28D9A53C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C1733CCC-7CC1-4918-91AB-A6759813F584}
+	EndGlobalSection
+EndGlobal

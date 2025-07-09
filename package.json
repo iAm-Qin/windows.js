@@ -1,0 +1,48 @@
+{
+	"name": "@qinjianwei/windows.js",
+	"version": "205.99.3881",
+	"description": "The Windows SDK.",
+	"main": "./src/windows.js",
+	"exports": {
+		".": "./src/windows.js",
+		"./treeshake/rollup.config": "./src/treeshake/rollup.config.js"
+	},
+	"types": "./src/windows.d.ts",
+	"type": "module",
+	"keywords": [
+		"windows", "win32", "win64", "api", "sdk",
+		"user32", "kernel32", "gdi32", "shell32", "comdlg32",
+		"bitfield", "struct", "union", "constant", "macro", "enum", "pointer",
+		"int", "long", "longlong", "short", "char",
+		"dll", "ffi", "koffi"
+	],
+	"author": "Jianwei Qin <304586351@qq.com>",
+	"contributors": [
+	],
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/iAm-Qin/windows.js.git"
+	},
+	"dependencies": {
+		"koffi": "^2.12.1",
+		"debug": "^4.4.1"
+	},
+	"devDependencies": {
+		"windows.js": "npm:@qinjianwei/windows.js@latest",
+		"find-process": "^2.0.0",
+		"esm-dirname-polyfill": "latest",
+		"iconv-lite": "latest",
+		"js-test-runner": "^12.0.2"
+	},
+	"engines": {
+		"node": ">=16"
+	},
+	"os": [
+		"win32"
+	],
+	"readme": "./readme.md",
+	"scripts": {
+		"jsdoc": "jsdoc . -c jsdoc.json"
+	}
+}

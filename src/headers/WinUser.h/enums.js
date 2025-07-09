@@ -1,0 +1,101 @@
+// basic
+import {pointer} from "../../types.js";
+import {int} from "../../types.js";
+
+
+export const DIALOG_CONTROL_DPI_CHANGE_BEHAVIORS = int;
+export const DCDC_DEFAULT = 0x0000;
+export const DCDC_DISABLE_FONT_UPDATE = 0x0001;
+export const DCDC_DISABLE_RELAYOUT = 0x0002;
+
+export const DIALOG_DPI_CHANGE_BEHAVIORS = int;
+export const DDC_DEFAULT = 0x0000;
+export const DDC_DISABLE_ALL = 0x0001;
+export const DDC_DISABLE_RESIZE = 0x0002;
+export const DDC_DISABLE_CONTROL_RELAYOUT = 0x0004;
+
+export const POINTER_BUTTON_CHANGE_TYPE = int;
+export const POINTER_CHANGE_NONE = 0;
+export const POINTER_CHANGE_FIRSTBUTTON_DOWN = 1;
+export const POINTER_CHANGE_FIRSTBUTTON_UP = 2;
+export const POINTER_CHANGE_SECONDBUTTON_DOWN = 3;
+export const POINTER_CHANGE_SECONDBUTTON_UP = 4;
+export const POINTER_CHANGE_THIRDBUTTON_DOWN = 5;
+export const POINTER_CHANGE_THIRDBUTTON_UP = 6;
+export const POINTER_CHANGE_FOURTHBUTTON_DOWN = 7;
+export const POINTER_CHANGE_FOURTHBUTTON_UP = 8;
+export const POINTER_CHANGE_FIFTHBUTTON_DOWN = 9;
+export const POINTER_CHANGE_FIFTHBUTTON_UP = 10;
+
+export const POINTER_FEEDBACK_MODE = int;
+export const POINTER_FEEDBACK_DEFAULT = 1;
+export const POINTER_FEEDBACK_INDIRECT = 2;
+export const POINTER_FEEDBACK_NONE = 3;
+
+export const FEEDBACK_TYPE = int;
+export const FEEDBACK_TOUCH_CONTACTVISUALIZATION = 1;
+export const FEEDBACK_PEN_BARRELVISUALIZATION = 2;
+export const FEEDBACK_PEN_TAP = 3;
+export const FEEDBACK_PEN_DOUBLETAP = 4;
+export const FEEDBACK_PEN_PRESSANDHOLD = 5;
+export const FEEDBACK_PEN_RIGHTTAP = 6;
+export const FEEDBACK_TOUCH_TAP = 7;
+export const FEEDBACK_TOUCH_DOUBLETAP = 8;
+export const FEEDBACK_TOUCH_PRESSANDHOLD = 9;
+export const FEEDBACK_TOUCH_RIGHTTAP = 10;
+export const FEEDBACK_GESTURE_PRESSANDTAP = 11;
+export const FEEDBACK_MAX = 0xFFFFFFFF;
+
+export const EDIT_CONTROL_FEATURE = int;
+export const EDIT_CONTROL_FEATURE_ENTERPRISE_DATA_PROTECTION_PASTE_SUPPORT = 0;
+export const EDIT_CONTROL_FEATURE_PASTE_NOTIFICATIONS = 1;
+
+export const HANDEDNESS = int;
+export const HANDEDNESS_LEFT = 0;
+export const HANDEDNESS_RIGHT = 1;
+
+export const POINTER_DEVICE_TYPE = int;
+export const POINTER_DEVICE_TYPE_INTEGRATED_PEN = 0x00000001;
+export const POINTER_DEVICE_TYPE_EXTERNAL_PEN = 0x00000002;
+export const POINTER_DEVICE_TYPE_TOUCH = 0x00000003;
+export const POINTER_DEVICE_TYPE_TOUCH_PAD = 0x00000004;
+export const POINTER_DEVICE_TYPE_MAX = 0xFFFFFFFF;
+
+export const POINTER_DEVICE_CURSOR_TYPE = int;
+export const POINTER_DEVICE_CURSOR_TYPE_UNKNOWN = 0x00000000;
+export const POINTER_DEVICE_CURSOR_TYPE_TIP = 0x00000001;
+export const POINTER_DEVICE_CURSOR_TYPE_ERASER = 0x00000002;
+export const POINTER_DEVICE_CURSOR_TYPE_MAX = 0xFFFFFFFF;
+
+export const INPUT_MESSAGE_DEVICE_TYPE = int;
+export const IMDT_UNAVAILABLE = 0x00000000;
+export const IMDT_KEYBOARD = 0x00000001;
+export const IMDT_MOUSE = 0x00000002;
+export const IMDT_TOUCH = 0x00000004;
+export const IMDT_PEN = 0x00000008;
+export const IMDT_TOUCHPAD = 0x00000010;
+
+export const INPUT_MESSAGE_ORIGIN_ID = int;
+export const IMO_UNAVAILABLE = 0x00000000;
+export const IMO_HARDWARE = 0x00000001;
+export const IMO_INJECTED = 0x00000002;
+export const IMO_SYSTEM = 0x00000004;
+
+export const AR_STATE = int;
+export const AR_ENABLED = 0x0;
+export const AR_DISABLED = 0x1;
+export const AR_SUPPRESSED = 0x2;
+export const AR_REMOTESESSION = 0x4;
+export const AR_MULTIMON = 0x8;
+export const AR_NOSENSOR = 0x10;
+export const AR_NOT_SUPPORTED = 0x20;
+export const AR_DOCKED = 0x40;
+export const AR_LAPTOP = 0x80;
+export const PAR_STATE = pointer(AR_STATE);
+
+export const ORIENTATION_PREFERENCE = int;
+export const ORIENTATION_PREFERENCE_NONE = 0x0;
+export const ORIENTATION_PREFERENCE_LANDSCAPE = 0x1;
+export const ORIENTATION_PREFERENCE_PORTRAIT = 0x2;
+export const ORIENTATION_PREFERENCE_LANDSCAPE_FLIPPED = 0x4;
+export const ORIENTATION_PREFERENCE_PORTRAIT_FLIPPED = 0x8;

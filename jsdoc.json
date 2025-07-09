@@ -1,0 +1,37 @@
+{
+	"plugins": [],
+	"recurseDepth": 10,
+	"source": {
+		"includePattern": ".+\\.js$",
+		"exclude": [
+			"codeGen",
+			"debug",
+			"demos",
+			"docs",
+			"repos",
+			"tests",
+			"src/koffi-struct-bitfield"
+		]
+	},
+	"sourceType": "module",
+	"tags": {
+		"allowUnknownTags": true,
+		"dictionaries": ["jsdoc", "closure"]
+	},
+	"templates": {
+		"cleverLinks": false,
+		"monospaceLinks": false,
+		"default": {
+			"outputSourcePath": false,
+			"outputSourceFiles": false
+		}
+	},
+	"opts": {
+		"template": "templates/default",
+		"package": "package.json",
+		"readme": "readme.md",
+		"destination": "./docs/",
+		"recurse": true,
+		"nocolor": false
+	}
+}
