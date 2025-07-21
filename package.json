@@ -1,6 +1,6 @@
 {
 	"name": "@qinjianwei/windows.js",
-	"version": "205.99.3881",
+	"version": "205.99.3882",
 	"description": "The Windows SDK.",
 	"main": "./src/windows.js",
 	"exports": {

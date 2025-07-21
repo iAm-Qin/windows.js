@@ -12,7 +12,7 @@ buffer.writeBigInt64LE(-1n);
  */
 export /*@__NO_SIDE_EFFECTS__*/ function isSignedInteger (type) {
 	return type.primitive
-		   ? !type.unsigned ?? (type.unsigned = -1 !== type.get(buffer, 0))
+		   ? null != type.unsigned ? !type.unsigned : !(type.unsigned = -1 !== type.get(buffer, 0))
 		   : -1 === koffi.decode(buffer, 0, type);
 }
 
