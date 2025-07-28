@@ -1,10 +1,11 @@
 {
 	"name": "@qinjianwei/windows.js",
-	"version": "205.99.3882",
+	"version": "205.99.3883",
 	"description": "The Windows SDK.",
 	"main": "./src/windows.js",
 	"exports": {
 		".": "./src/windows.js",
+		"./demos/common.js": "./demos/common.js",
 		"./treeshake/rollup.config": "./src/treeshake/rollup.config.js"
 	},
 	"types": "./src/windows.d.ts",
