@@ -1,6 +1,6 @@
 import {MessageBox} from "windows.js";
 import {MB_OK} from "windows.js";
-import {hellos} from "./common.js";
+import {hellos} from "windows.js/demos/common.js";
 
 // MessageBox 是 MessageBoxW 的别名。
 // MessageBox is the alias for MessageBoxW.
