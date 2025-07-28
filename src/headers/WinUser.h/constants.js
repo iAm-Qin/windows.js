@@ -5,6 +5,9 @@ import {isArch64} from "../../types.js";
 import {sizeof} from "../../types.js";
 import {int} from "../../types.js";
 
+// basetsd.h
+import {ULONG_PTR} from "../basetsd.h/basetsd.js";
+
 // windef.h
 import {HBITMAP, HWND} from "../windef.h/windef.js";
 
@@ -17,6 +20,70 @@ import {HANDLE, LONG} from "../winnt.h/winnt.js";
 // WinUser.h
 import {DLGPROC} from "./callbacks.js";
 
+
+export function IS_INTRESOURCE (_r) {
+	return BigInt(typecast(ULONG_PTR, _r)) >> BigInt(16) === 0n;
+}
+
+/**
+ * Because the `koffi` accepts integers passing to a `string` parameter, this macro directly returns the inputted value.
+ *
+ * @param x {number}
+ */
+export function MAKEINTRESOURCEA (x) {
+	return x;
+}
+
+/**
+ * Because the `koffi` accepts integers passing to a `string` parameter, this macro directly returns the inputted value.
+ *
+ * @param x {number}
+ */
+export function MAKEINTRESOURCEW (x) {
+	return x;
+}
+
+export {MAKEINTRESOURCEW as MAKEINTRESOURCE};
+
+const MAKEINTRESOURCE = x => MAKEINTRESOURCEW(x);
+
+export const RT_CURSOR = MAKEINTRESOURCE(1);
+export const RT_BITMAP = MAKEINTRESOURCE(2);
+export const RT_ICON = MAKEINTRESOURCE(3);
+export const RT_MENU = MAKEINTRESOURCE(4);
+export const RT_DIALOG = MAKEINTRESOURCE(5);
+export const RT_STRING = MAKEINTRESOURCE(6);
+export const RT_FONTDIR = MAKEINTRESOURCE(7);
+export const RT_FONT = MAKEINTRESOURCE(8);
+export const RT_ACCELERATOR = MAKEINTRESOURCE(9);
+export const RT_RCDATA = MAKEINTRESOURCE(10);
+export const RT_MESSAGETABLE = MAKEINTRESOURCE(11);
+export const DIFFERENCE = 11;
+export const RT_GROUP_CURSOR = MAKEINTRESOURCE(RT_CURSOR + DIFFERENCE);
+export const RT_GROUP_ICON = MAKEINTRESOURCE(RT_ICON + DIFFERENCE);
+export const RT_VERSION = MAKEINTRESOURCE(16);
+export const RT_DLGINCLUDE = MAKEINTRESOURCE(17);
+export const RT_PLUGPLAY = MAKEINTRESOURCE(19);
+export const RT_VXD = MAKEINTRESOURCE(20);
+export const RT_ANICURSOR = MAKEINTRESOURCE(21);
+export const RT_ANIICON = MAKEINTRESOURCE(22);
+export const RT_HTML = MAKEINTRESOURCE(23);
+// export const RT_MANIFEST = 24;
+// export const CREATEPROCESS_MANIFEST_RESOURCE_ID = 1;
+// export const ISOLATIONAWARE_MANIFEST_RESOURCE_ID = 2;
+// export const ISOLATIONAWARE_NOSTATICIMPORT_MANIFEST_RESOURCE_ID = 3;
+// export const ISOLATIONPOLICY_MANIFEST_RESOURCE_ID = 4;
+// export const ISOLATIONPOLICY_BROWSER_MANIFEST_RESOURCE_ID = 5;
+// export const MINIMUM_RESERVED_MANIFEST_RESOURCE_ID = 1;
+// export const MAXIMUM_RESERVED_MANIFEST_RESOURCE_ID = 16;
+export const RT_MANIFEST = MAKEINTRESOURCE(24);
+export const CREATEPROCESS_MANIFEST_RESOURCE_ID = MAKEINTRESOURCE(1);
+export const ISOLATIONAWARE_MANIFEST_RESOURCE_ID = MAKEINTRESOURCE(2);
+export const ISOLATIONAWARE_NOSTATICIMPORT_MANIFEST_RESOURCE_ID = MAKEINTRESOURCE(3);
+export const ISOLATIONPOLICY_MANIFEST_RESOURCE_ID = MAKEINTRESOURCE(4);
+export const ISOLATIONPOLICY_BROWSER_MANIFEST_RESOURCE_ID = MAKEINTRESOURCE(5);
+export const MINIMUM_RESERVED_MANIFEST_RESOURCE_ID = MAKEINTRESOURCE(1);
+export const MAXIMUM_RESERVED_MANIFEST_RESOURCE_ID = MAKEINTRESOURCE(16);
 
 export const SB_HORZ = 0;
 export const SB_VERT = 1;
@@ -1667,24 +1734,24 @@ export const SC_SEPARATOR = 0xF00F;
 export const SCF_ISSECURE = 0x00000001;
 export const SC_ICON = SC_MINIMIZE;
 export const SC_ZOOM = SC_MAXIMIZE;
-export const IDC_ARROW = 32512;		// MAKEINTRESOURCE
-export const IDC_IBEAM = 32513;		// MAKEINTRESOURCE
-export const IDC_WAIT = 32514;		// MAKEINTRESOURCE
-export const IDC_CROSS = 32515;		// MAKEINTRESOURCE
-export const IDC_UPARROW = 32516;	// MAKEINTRESOURCE
-export const IDC_SIZE = 32640;		// MAKEINTRESOURCE
-export const IDC_ICON = 32641;		// MAKEINTRESOURCE
-export const IDC_SIZENWSE = 32642;	// MAKEINTRESOURCE
-export const IDC_SIZENESW = 32643;	// MAKEINTRESOURCE
-export const IDC_SIZEWE = 32644;	// MAKEINTRESOURCE
-export const IDC_SIZENS = 32645;	// MAKEINTRESOURCE
-export const IDC_SIZEALL = 32646;	// MAKEINTRESOURCE
-export const IDC_NO = 32648;		// MAKEINTRESOURCE
-export const IDC_HAND = 32649;		// MAKEINTRESOURCE
-export const IDC_APPSTARTING = 32650;	// MAKEINTRESOURCE
-export const IDC_HELP = 32651;		// MAKEINTRESOURCE
-export const IDC_PIN = 32671;		// MAKEINTRESOURCE
-export const IDC_PERSON = 32672;	// MAKEINTRESOURCE
+export const IDC_ARROW = MAKEINTRESOURCE(32512);
+export const IDC_IBEAM = MAKEINTRESOURCE(32513);
+export const IDC_WAIT = MAKEINTRESOURCE(32514);
+export const IDC_CROSS = MAKEINTRESOURCE(32515);
+export const IDC_UPARROW = MAKEINTRESOURCE(32516);
+export const IDC_SIZE = MAKEINTRESOURCE(32640);
+export const IDC_ICON = MAKEINTRESOURCE(32641);
+export const IDC_SIZENWSE = MAKEINTRESOURCE(32642);
+export const IDC_SIZENESW = MAKEINTRESOURCE(32643);
+export const IDC_SIZEWE = MAKEINTRESOURCE(32644);
+export const IDC_SIZENS = MAKEINTRESOURCE(32645);
+export const IDC_SIZEALL = MAKEINTRESOURCE(32646);
+export const IDC_NO = MAKEINTRESOURCE(32648);
+export const IDC_HAND = MAKEINTRESOURCE(32649);
+export const IDC_APPSTARTING = MAKEINTRESOURCE(32650);
+export const IDC_HELP = MAKEINTRESOURCE(32651);
+export const IDC_PIN = MAKEINTRESOURCE(32671);
+export const IDC_PERSON = MAKEINTRESOURCE(32672);
 export const IMAGE_BITMAP = 0;
 export const IMAGE_ICON = 1;
 export const IMAGE_CURSOR = 2;
@@ -1771,13 +1838,20 @@ export const OIC_ERROR = OIC_HAND;
 export const OIC_INFORMATION = OIC_NOTE;
 export const OIC_SHIELD = 32518;
 export const ORD_LANGDRIVER = 1;
-export const IDI_APPLICATION = 32512;
-export const IDI_HAND = 32513;
-export const IDI_QUESTION = 32514;
-export const IDI_EXCLAMATION = 32515;
-export const IDI_ASTERISK = 32516;
-export const IDI_WINLOGO = 32517;
-export const IDI_SHIELD = 32518;
+// export const IDI_APPLICATION = 32512;
+// export const IDI_HAND = 32513;
+// export const IDI_QUESTION = 32514;
+// export const IDI_EXCLAMATION = 32515;
+// export const IDI_ASTERISK = 32516;
+// export const IDI_WINLOGO = 32517;
+// export const IDI_SHIELD = 32518;
+export const IDI_APPLICATION = MAKEINTRESOURCE(32512);
+export const IDI_HAND = MAKEINTRESOURCE(32513);
+export const IDI_QUESTION = MAKEINTRESOURCE(32514);
+export const IDI_EXCLAMATION = MAKEINTRESOURCE(32515);
+export const IDI_ASTERISK = MAKEINTRESOURCE(32516);
+export const IDI_WINLOGO = MAKEINTRESOURCE(32517);
+export const IDI_SHIELD = MAKEINTRESOURCE(32518);
 export const IDI_WARNING = IDI_EXCLAMATION;
 export const IDI_ERROR = IDI_HAND;
 export const IDI_INFORMATION = IDI_ASTERISK;
