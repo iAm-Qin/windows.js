@@ -108,43 +108,39 @@ const codeGenerators = {
 		result += "\n";
 		return result;
 	},
-	function (functions) {
-		let functionDeclaresString = "";
-		let functionString = functions.map(x => {
-			correctParams(x);
-			const maxWidth = countMaxWidth(x);
+	function (x) {
+		correctParams(x);
+		const maxWidth = countMaxWidth(x);
 
-			let result = `export function ${x.name} () {};\n`
-				+ `${x.name} = createAutoLoader(lib, "${x.name}", ${correctPointerType(x.type)} /* ${x.oriType} */, [\n`
-				+ (x.params.map(p => `\t${p.type},${"".padEnd(maxWidth[0] - p.type.length)}`
-					+ ` /* ${p.dir.padEnd(maxWidth[1])} ${p.oriType.padEnd(maxWidth[2])} ${p.name.padEnd(maxWidth[3])} */\n`,
-				).join("") || "	/* void */\n")
-				+ `], f => ${x.name} = f);\n`;
+		let functionString = `export function ${x.name} () {};\n`
+			+ `${x.name} = createAutoLoader(lib, "${x.name}", ${correctPointerType(x.type)} /* ${x.oriType} */, [\n`
+			+ (x.params.map(p => `\t${p.type},${"".padEnd(maxWidth[0] - p.type.length)}`
+				+ ` /* ${p.dir.padEnd(maxWidth[1])} ${p.oriType.padEnd(maxWidth[2])} ${p.name.padEnd(maxWidth[3])} */\n`,
+			).join("") || "	/* void */\n")
+			+ `], f => ${x.name} = f);\n`;
 
-			// alias
-			if (x.name.endsWith("W")) {
-				result += `export {${x.name} as ${x.name.slice(0, -1)}};\n`;
-			}
+		// alias
+		if (x.name.endsWith("W")) {
+			functionString += `export {${x.name} as ${x.name.slice(0, -1)}};\n`;
+		}
+		functionString += "\n";
 
-			x.declType = x.oriType;
-			if (x.declType.match(/[^0-9A-Za-z_]/)) {
-				x.declType = `"${x.declType}"`;
-			}
+		x.declType = x.oriType;
+		if (x.declType.match(/[^0-9A-Za-z_]/)) {
+			x.declType = `"${x.declType}"`;
+		}
 
-			// .d.ts
-			functionDeclaresString += `export function ${x.name} (`
+		// .d.ts
+		let functionDeclarationString = `export function ${x.name} (`
+			+ x.params.map((p, i) => `${p.name || `param${i}`}: ${p.declType}`).join(", ")
+			+ `): ${x.declType};\n`;
+		if (x.name.endsWith("W")) {
+			functionDeclarationString += `export function ${x.name.slice(0, -1)} (`
 				+ x.params.map((p, i) => `${p.name || `param${i}`}: ${p.declType}`).join(", ")
 				+ `): ${x.declType};\n`;
-			if (x.name.endsWith("W")) {
-				functionDeclaresString += `export function ${x.name.slice(0, -1)} (`
-					+ x.params.map((p, i) => `${p.name || `param${i}`}: ${p.declType}`).join(", ")
-					+ `): ${x.declType};\n`;
-			}
+		}
 
-			return result;
-		}).join("\n");
-
-		return {functionString, functionDeclaresString};
+		return {functionString, functionDeclarationString};
 	},
 };
 
@@ -152,44 +148,47 @@ let indent = 0;
 
 function genMembers (members) {
 	// step 1，调整指针、数组、位域，去除 const 等字符，规范化类型名称
-	members.forEach(member => {
-		member.oriName = member.name;
-		member.oriType = member.type;
+	if (!members.corrected) {
+		members.forEach(member => {
+			member.oriName = member.name;
+			member.oriType = member.type;
 
-		if (["struct", "union"].includes(member.type)) {
-			member.name = member.name.replace("DUMMYUNIONNAME", "u").replace("DUMMYSTRUCTNAME", "s");
-			return;
-		}
+			if (["struct", "union"].includes(member.type)) {
+				member.name = member.name.replace("DUMMYUNIONNAME", "u").replace("DUMMYSTRUCTNAME", "s");
+				return;
+			}
 
-		let {name, type} = member;
+			let {name, type} = member;
 
-		while (name.startsWith("*")) {	// 名字以星号(指针)开头，将星号放到类型中去。
-			type += "*";
-			name = name.substr(1);
-		}
+			while (name.startsWith("*")) {	// 名字以星号(指针)开头，将星号放到类型中去。
+				type += "*";
+				name = name.substr(1);
+			}
 
-		member.oriName = name;
-		member.oriType = type;
+			member.oriName = name;
+			member.oriType = type;
 
-		type = type
-			// .replace(/\*/, " *")
-			.replace(/\s+/g, " ")
-			.replace(/const/i, "")
-			.replace(/struct/, "")
-			.replace(/union/, "")
-			.trim();
+			type = type
+				// .replace(/\*/, " *")
+				.replace(/\s+/g, " ")
+				.replace(/const/i, "")
+				.replace(/struct/, "")
+				.replace(/union/, "")
+				.trim();
 
-		type = correctPointerType(type);
+			type = correctPointerType(type);
 
-		if (member.arraySize) {
-			type = correctArrayType(type, member);	// step 3 也有
-		} else if (member.bits) {
-			type = `bitfield(${type}, ${member.bits})`;
-		}
+			if (member.arraySize) {
+				type = correctArrayType(type, member);	// step 3 也有
+			} else if (member.bits) {
+				type = `bitfield(${type}, ${member.bits})`;
+			}
 
-		member.name = name;
-		member.type = type;
-	});
+			member.name = name;
+			member.type = type;
+		});
+	}
+	members.corrected = true;
 
 	// step 2，计算宽度
 	const maxWidth = {name: 0, type: 0, oriType: 0};
@@ -235,6 +234,9 @@ function countMaxWidth (x) {
 }
 
 function correctParams (x) {
+	if (x.params.corrected) {
+		return;
+	}
 	x.params.forEach(p => {
 		p.declType = p.type;	// 用于 .d.ts 文件
 
@@ -260,6 +262,7 @@ function correctParams (x) {
 			p.declType = `"${p.declType}"`;
 		}
 	});
+	x.params.corrected = true;
 }
 
 function correctArrayType (type, member) {
@@ -319,6 +322,8 @@ function correctMisc (type) {
 		`C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.19041.0\\um\\libloaderapi.h`,
 		`C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.19041.0\\um\\processthreadsapi.h`,
 		`C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.19041.0\\um\\wincontypes.h`,
+		`C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.19041.0\\um\\consoleapi.h`,
+		`C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.19041.0\\um\\consoleapi2.h`,
 		`C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.19041.0\\um\\consoleapi3.h`,
 		`C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.19041.0\\um\\processenv.h`,
 		`C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.19041.0\\um\\memoryapi.h`,
@@ -370,10 +375,12 @@ function correctMisc (type) {
 
 		// functions
 		if (functions.length) {
-			let {functionDeclaresString, functionString} = codeGenerators.function(functions);
+			const r = functions.map(codeGenerators.function);
+			const functionString = r.map(x => x.functionString).join("");
+			const functionDeclarationString = r.map(x => x.functionDeclarationString).join("");
 
 			fs.writeFileSync(path.join(basePath, "functions.js"), functionString);
-			fs.writeFileSync(path.join(basePath, "functions.d.ts"), functionDeclaresString);
+			fs.writeFileSync(path.join(basePath, "functions.d.ts"), functionDeclarationString);
 		}
 
 		// region single file
@@ -384,10 +391,17 @@ function correctMisc (type) {
 			enums.map(x => ({type: "enum", obj: x})),
 			structs.map(x => ({type: "struct", obj: x})),
 			callbacks.map(x => ({type: "callback", obj: x})),
+			functions.map(x => ({type: "function", obj: x})),
 		).sort((a, b) => a.obj.offset > b.obj.offset ? 1 : a.obj.offset < b.obj.offset ? -1 : 0);
 		const totalString =
 			"// @formatter: " + "off\n\n"
-			+ total.map(x => codeGenerators[x.type](x.obj)).join("");
+			+ total.map(x => {
+				let r = codeGenerators[x.type](x.obj);
+				if (r.functionString) {
+					r = r.functionString;
+				}
+				return r;
+			}).join("");
 		fs.writeFileSync(path.join(basePath, `${path.basename(basePath, ".h")}.js`), totalString);
 
 		// endregion
@@ -523,6 +537,8 @@ async function processOne (opt) {
 			}
 
 			x.push({offset, name, type, oriType, params});
+
+			return match;
 		};
 	}
 
@@ -546,7 +562,7 @@ async function processOne (opt) {
 	const aliasRe = /typedef\s+(?:(?:unsigned|CONST|const)\s+)?(?!struct|union|enum)(?<name>[0-9a-zA-Z_]+\s*\*?)\s+(?<aliasListString>[^();]+);/g;
 	cCode.replace(aliasRe, function (match, name, aliasListString, offset) {
 		if (name.endsWith("A")) {	// typedef xxxA xxx  这些不用，用 W 的
-			return;
+			return match;
 		}
 
 		const aliasList = aliasListString.trim()
@@ -578,6 +594,8 @@ async function processOne (opt) {
 
 			aliases.push({offset, name, alias});
 		});
+
+		return match;
 	});
 
 	// 常数
@@ -585,7 +603,7 @@ async function processOne (opt) {
 	cCode.replace(/#define\s+([0-9a-zA-Z_]+)\s+((?:\\\r?\n|.)+)/gm, function (match, name, value, offset) {
 		value = value.trim();
 		if (value.endsWith("W") || value.endsWith("A")) {	// #define xxx xxxW  这些不是常量
-			return;
+			return match;
 		}
 		value = value
 			.replace(/\\\r?\n/g, "\n")                        // 去掉续行符
@@ -619,6 +637,7 @@ async function processOne (opt) {
 		// }
 
 		constants.push({offset, name, value, typecast});
+		return match;
 	});
 
 	// 枚举
@@ -644,6 +663,7 @@ async function processOne (opt) {
 		});
 		// console.log(members);
 		enums.push({offset, name, members, pointerName});
+		return match;
 	});
 
 	//region nestedStructs
@@ -668,7 +688,9 @@ async function processOne (opt) {
 		+ String.raw`[\t ]*(?<comment>//[^\r\n]*)?`;
 	const outFilename = path.join("output.json");
 
-	const nestedStructs = await callRegexp({pattern: nestedStructPattern, inputStringFilename: opt.filepath, outFilename});
+	fs.writeFileSync("temp.h", cCode);
+
+	const nestedStructs = await callRegexp({pattern: nestedStructPattern, inputStringFilename: "temp.h", outFilename});
 	const nestedStructs2 = [];
 	for (const {groups, index} of nestedStructs) {
 		nestedStructs2.push({
