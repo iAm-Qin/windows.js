@@ -17,6 +17,8 @@ export * from "./headers/windef.h/windef.js";
 export * from "./headers/winerror.h/winerror.js";
 export * from "./headers/minwinbase.h/minWinBase.js";
 export * from "./headers/wincontypes.h/wincontypes.js";
+export * from "./headers/consoleapi.h/consoleapi.js";
+export * from "./headers/consoleapi2.h/consoleapi2.js";
 export * from "./headers/consoleapi3.h/consoleapi3.js";
 export * from "./headers/handleapi.h/handleapi.js";
 export * from "./headers/libloaderapi.h/libloaderapi.js";

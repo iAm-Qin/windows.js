@@ -120,6 +120,7 @@ export const INPUT_RECORD = struct({
 		FocusEvent            : FOCUS_EVENT_RECORD,        // FOCUS_EVENT_RECORD
 	}), // union
 });
+export const PINPUT_RECORD = pointer(INPUT_RECORD);
 
 //
 //  EventType flags:

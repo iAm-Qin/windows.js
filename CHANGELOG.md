@@ -1,5 +1,13 @@
 # Version history
 
+#### 205.99.3885
+
+*Released on 2025-08-04*
+
+- Added `consoleapi.h`, `consoleapi2.h`.
+- Added `export const PINPUT_RECORD` in `wincontypes.js`.
+- Fixed some bugs in `c2js.mjs`. For details, see rev(817533cf).
+
 #### 205.99.3884
 
 *Released on 2025-08-01*

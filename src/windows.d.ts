@@ -32,6 +32,8 @@ export * from "./headers/shellapi.h/index.js";
 export * from "./headers/commdlg.h/index.js";
 
 export * from "./headers/commdlg.h/functions.d.ts";
+export * from "./headers/consoleapi.h/functions.d.ts";
+export * from "./headers/consoleapi2.h/functions.d.ts";
 export * from "./headers/consoleapi3.h/functions.d.ts";
 export * from "./headers/handleapi.h/functions.d.ts";
 export * from "./headers/libloaderapi.h/functions.d.ts";
